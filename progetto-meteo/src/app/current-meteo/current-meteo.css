@@ -1,0 +1,32 @@
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  color: #fff;
+}
+
+h2 {
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.weather-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.lead {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+input {
+  border-radius: 12px !important;
+}
+
+.btn-primary {
+  border-radius: 12px;
+  font-weight: 600;
+}

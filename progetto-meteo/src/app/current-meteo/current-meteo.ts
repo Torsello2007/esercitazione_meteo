@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MeteoService } from '../services/meteo-service';
@@ -8,17 +8,18 @@ import { MeteoService } from '../services/meteo-service';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './current-meteo.html',
-  styleUrl: './current-meteo.css',
+  styleUrls: ['./current-meteo.css'],
 })
 export class CurrentMeteo {
-  city = 'Milano';       // puoi mettere una città di default
+  city = '';
   dati: any = null;
   loading = false;
   errorMsg = '';
 
+  @Output() cityChange = new EventEmitter<string>(); // invia la città selezionata
+
   constructor(private meteoService: MeteoService) {}
 
-  // chiamata solo quando l’utente preme "Cerca"
   caricaMeteo() {
     if (!this.city.trim()) return;
 
@@ -30,6 +31,7 @@ export class CurrentMeteo {
       next: (risposta) => {
         this.dati = risposta;
         this.loading = false;
+        this.cityChange.emit(this.city); // invio la città anche a PrevisioniFuture
       },
       error: (err) => {
         console.error(err);

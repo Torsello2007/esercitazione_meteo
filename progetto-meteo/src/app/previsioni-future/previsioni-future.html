@@ -1,33 +1,46 @@
-<div class="card p-3">
-  <h2>Previsioni Future</h2>
+<div class="card">
+  <div class="card-header">
+    <div>
+      <div class="card-title gradient-text">Previsioni Future</div>
+      <div class="card-subtitle">Ogni 3 ore</div>
+    </div>
+  </div>
 
-  <!-- input per la città -->
-  <div class="mb-3 d-flex gap-2">
+  <div class="search-row">
     <input
       type="text"
-      class="form-control"
       [(ngModel)]="city"
-      placeholder="Inserisci una città"
+      placeholder="Inserisci una città (es. Milano)"
     />
-    <button class="btn btn-primary" (click)="caricaPrevisioni()">
-      Carica previsioni
+    <button class="btn-primary" (click)="caricaPrevisioni()">
+      Cerca
     </button>
   </div>
 
-  <!-- se ho dati, li mostro (come *ngIf="fact") -->
-  <div *ngIf="dati">
+  <p *ngIf="loading" class="loading-text">Caricamento in corso…</p>
+  <p *ngIf="errorMsg" class="error-text">{{ errorMsg }}</p>
 
-    <!-- OpenWeather manda le previsioni in dati.list -->
-    <div *ngFor="let item of dati.list" class="border-bottom py-1">
-      <strong>{{ item.dt_txt }}</strong><br />
-      Temperatura: {{ item.main.temp }} °C<br />
-      Condizioni: {{ item.weather[0].description }}
+  <div *ngIf="dati" class="forecast-list">
+    <div *ngFor="let item of dati.list" class="forecast-item">
+      <div class="f-time">
+        {{ item.dt_txt.split(' ')[0] | date:'dd/MM' }}<br>
+        {{ item.dt_txt.split(' ')[1].slice(0,5) }}
+      </div>
+
+      <div class="f-temp">
+        {{ item.main.temp }}°C
+      </div>
+
+      <div class="f-desc">
+        {{ item.weather[0].description }}
+      </div>
+
+      <div class="f-icon">
+        <img
+          [src]="'https://openweathermap.org/img/wn/' + item.weather[0].icon + '@2x.png'"
+          [alt]="item.weather[0].description"
+        />
+      </div>
     </div>
-
   </div>
-
-  <!-- se non ho ancora dati -->
-  <p *ngIf="!dati">
-    Nessuna previsione caricata.
-  </p>
 </div>

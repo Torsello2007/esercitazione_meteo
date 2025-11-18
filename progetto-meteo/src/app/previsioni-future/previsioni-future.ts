@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MeteoService } from '../services/meteo-service';
@@ -8,25 +8,39 @@ import { MeteoService } from '../services/meteo-service';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './previsioni-future.html',
-  styleUrl: './previsioni-future.css',
+  styleUrls: ['./previsioni-future.css'],
 })
-export class PrevisioniFuture {
-  city = 'Milano';   // esempio
-  dati: any;        
+export class PrevisioniFuture implements OnChanges {
+  @Input() city: string = '';
+  dati: any = null;
+  loading = false;
+  errorMsg = '';
 
   constructor(private meteo: MeteoService) {}
 
-  ngOnInit() {
-    // come nel PDF: all’avvio carico i dati
-    this.caricaPrevisioni();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['city'] && this.city.trim()) {
+      this.caricaPrevisioni();
+    }
   }
 
   caricaPrevisioni() {
-    // 1) chiamo il service (come caricaFatto → getRandomFact)
-    this.meteo.getForecast(this.city).subscribe(risposta => {
-      // 2) quando l’Observable risponde, salvo i dati in una variabile
-      this.dati = risposta;
-      // 3) il template userà this.dati per mostrare le info
+    if (!this.city.trim()) return;
+
+    this.loading = true;
+    this.errorMsg = '';
+    this.dati = null;
+
+    this.meteo.getForecast(this.city).subscribe({
+      next: (risposta) => {
+        this.dati = risposta;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMsg = 'Non ho trovato nessuna città con questo nome.';
+        this.loading = false;
+      }
     });
   }
 }

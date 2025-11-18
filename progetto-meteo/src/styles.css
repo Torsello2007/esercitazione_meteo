@@ -1,1 +1,399 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===========================
+   FONT & RESET
+   =========================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg1: #0f172a;
+  --bg2: #020617;
+  --accent1: #38bdf8;
+  --accent2: #a855f7;
+  --accent3: #f97316;
+  --text-main: #f9fafb;
+  --text-muted: #cbd5f5;
+}
+
+/* ===========================
+   BODY + SFONDO ANIMATO
+   =========================== */
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-main);
+  background: radial-gradient(circle at top left, #1d3557 0, #0b1020 40%, #020617 100%);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Blob gradient animati sullo sfondo */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.7;
+  z-index: -2;
+  animation: float 18s ease-in-out infinite alternate;
+}
+
+body::before {
+  top: -80px;
+  left: -120px;
+  background: radial-gradient(circle, #38bdf8, #3b82f6);
+}
+
+body::after {
+  bottom: -100px;
+  right: -140px;
+  background: radial-gradient(circle, #a855f7, #f97316);
+  animation-delay: 3s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-40px, 40px, 0) scale(1.1);
+  }
+}
+
+/* ===========================
+   NAVBAR (usa ancora Bootstrap)
+   =========================== */
+.custom-navbar {
+  background: linear-gradient(100deg,
+      rgba(56, 189, 248, 0.9),
+      rgba(168, 85, 247, 0.9),
+      rgba(249, 115, 22, 0.9));
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.app-title {
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500;
+  margin-left: 10px;
+  padding: 8px 14px !important;
+  border-radius: 10px;
+  transition: 0.25s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.35) !important;
+  color: #000000 !important;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* contenitore principale Bootstrap */
+.app-container {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================
+   CARD METEO (glass effect)
+   =========================== */
+.card {
+  background: linear-gradient(135deg,
+      rgba(15, 23, 42, 0.86),
+      rgba(15, 23, 42, 0.6));
+  border-radius: 26px;
+  padding: 24px 26px;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  box-shadow:
+    0 24px 60px rgba(15, 23, 42, 0.95),
+    0 0 0 1px rgba(15, 23, 42, 0.8);
+  position: relative;
+  overflow: hidden;
+  color: var(--text-main);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right,
+      rgba(56, 189, 248, 0.18),
+      transparent 60%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.gradient-text {
+  background: linear-gradient(120deg, var(--accent1), var(--accent2), var(--accent3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ===========================
+   CAMPO RICERCA + BOTTONE
+   =========================== */
+.search-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.search-row input[type="text"] {
+  flex: 1 1 230px;
+  border-radius: 999px;
+  padding: 12px 18px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--text-main);
+  font-size: 15px;
+  outline: none;
+  transition: all 0.18s ease;
+}
+
+.search-row input[type="text"]::placeholder {
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.search-row input[type="text"]:focus {
+  border-color: var(--accent1);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.6);
+}
+
+/* pulsante principale */
+.btn-primary {
+  border: none;
+  border-radius: 999px;
+  padding: 11px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  cursor: pointer;
+  background-image: linear-gradient(120deg, var(--accent1), var(--accent2));
+  color: #0f172a;
+  box-shadow:
+    0 12px 28px rgba(56, 189, 248, 0.45),
+    0 0 0 1px rgba(15, 23, 42, 0.5);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow:
+    0 18px 40px rgba(56, 189, 248, 0.55),
+    0 0 0 1px rgba(15, 23, 42, 0.6);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow:
+    0 10px 26px rgba(15, 23, 42, 0.9),
+    0 0 0 1px rgba(15, 23, 42, 0.7);
+}
+
+/* ===========================
+   MESSAGGI STATO
+   =========================== */
+.loading-text {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.error-text {
+  font-size: 14px;
+  color: #fecaca;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* ===========================
+   METEO ATTUALE
+   =========================== */
+.current-weather-main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 16px;
+}
+
+.current-temp {
+  font-size: 40px;
+  font-weight: 700;
+  color: #ffffff !important;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.current-city {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff !important;
+}
+
+.current-extra {
+  font-size: 13px;
+  color: #e0e7ff !important;
+}
+
+/* badge info aggiuntive */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: radial-gradient(circle at top left,
+      rgba(56, 189, 248, 0.27),
+      rgba(15, 23, 42, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  margin-right: 6px;
+  margin-top: 6px;
+  color: var(--text-main);
+}
+
+/* ===========================
+   PREVISIONI 5 GIORNI
+   =========================== */
+.forecast-list {
+  margin-top: 14px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* scrollbar custom */
+.forecast-list::-webkit-scrollbar {
+  width: 6px;
+}
+.forecast-list::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.9);
+}
+.forecast-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent1), var(--accent2));
+  border-radius: 999px;
+}
+
+.forecast-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.9);
+}
+
+.forecast-item:last-child {
+  border-bottom: none;
+}
+
+.f-time {
+  width: 70px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.f-temp {
+  width: 80px;
+  font-size: 16px;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.f-desc {
+  flex: 1;
+  font-size: 14px;
+  color: #e2e8f0 !important;
+}
+
+.f-icon img {
+  width: 44px;
+  height: 44px;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .card {
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+
+  .card-title {
+    font-size: 20px;
+  }
+
+  .current-weather-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-primary {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
