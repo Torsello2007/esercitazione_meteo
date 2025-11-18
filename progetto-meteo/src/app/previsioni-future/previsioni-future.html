@@ -2,19 +2,8 @@
   <div class="card-header">
     <div>
       <div class="card-title gradient-text">Previsioni Future</div>
-      <div class="card-subtitle">Ogni 3 ore</div>
+      <div class="card-subtitle">Aggiornate ogni 3 ore</div>
     </div>
-  </div>
-
-  <div class="search-row">
-    <input
-      type="text"
-      [(ngModel)]="city"
-      placeholder="Inserisci una città (es. Milano)"
-    />
-    <button class="btn-primary" (click)="caricaPrevisioni()">
-      Cerca
-    </button>
   </div>
 
   <p *ngIf="loading" class="loading-text">Caricamento in corso…</p>
@@ -26,15 +15,8 @@
         {{ item.dt_txt.split(' ')[0] | date:'dd/MM' }}<br>
         {{ item.dt_txt.split(' ')[1].slice(0,5) }}
       </div>
-
-      <div class="f-temp">
-        {{ item.main.temp }}°C
-      </div>
-
-      <div class="f-desc">
-        {{ item.weather[0].description }}
-      </div>
-
+      <div class="f-temp">{{ item.main.temp }}°C</div>
+      <div class="f-desc">{{ item.weather[0].description }}</div>
       <div class="f-icon">
         <img
           [src]="'https://openweathermap.org/img/wn/' + item.weather[0].icon + '@2x.png'"

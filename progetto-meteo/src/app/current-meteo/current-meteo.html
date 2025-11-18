@@ -12,38 +12,26 @@
       [(ngModel)]="city"
       placeholder="Inserisci una città (es. Milano)"
     />
-    <button class="btn-primary" (click)="caricaMeteo()">
-      Cerca
-    </button>
+    <button class="btn-primary" (click)="caricaMeteo()">Cerca</button>
+    <button class="btn-primary" (click)="vaiPrevisioni()">Previsioni Future</button>
   </div>
 
   <p *ngIf="loading" class="loading-text">Caricamento in corso…</p>
   <p *ngIf="errorMsg" class="error-text">{{ errorMsg }}</p>
 
-  <div *ngIf="dati">
-    <div class="current-weather-main">
-      <div>
-        <div class="current-city">{{ dati.name }}</div>
-        <div class="current-temp">{{ dati.main.temp }} °C</div>
-      </div>
-
-      <div>
-        <div class="current-extra">
-          {{ dati.weather[0].description }}
-        </div>
-        <div class="current-extra">
-          Percepita: {{ dati.main.feels_like }} °C
-        </div>
-      </div>
-    </div>
-
+  <div *ngIf="dati" class="current-weather-main">
     <div>
-      <span class="badge-pill"> Umidità: {{ dati.main.humidity }}%</span>
-      <span class="badge-pill"> Vento: {{ dati.wind.speed }} m/s</span>
-      <span class="badge-pill"> Pressione: {{ dati.main.pressure }} hPa</span>
+      <div class="current-city">{{ dati.name }}</div>
+      <div class="current-temp">{{ dati.main.temp }} °C</div>
+      <div class="current-extra">{{ dati.weather[0].description }}</div>
+      <div class="current-extra">Percepita: {{ dati.main.feels_like }} °C</div>
     </div>
-
-    <div class="current-icon">
+    <div>
+      <span class="badge-pill">Umidità: {{ dati.main.humidity }}%</span>
+      <span class="badge-pill">Vento: {{ dati.wind.speed }} m/s</span>
+      <span class="badge-pill">Pressione: {{ dati.main.pressure }} hPa</span>
+    </div>
+    <div class="f-icon">
       <img
         [src]="'https://openweathermap.org/img/wn/' + dati.weather[0].icon + '@2x.png'"
         [alt]="dati.weather[0].description"

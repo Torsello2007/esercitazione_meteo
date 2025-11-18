@@ -1,6 +1,7 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { MeteoService } from '../services/meteo-service';
 
 @Component({
@@ -10,18 +11,22 @@ import { MeteoService } from '../services/meteo-service';
   templateUrl: './previsioni-future.html',
   styleUrls: ['./previsioni-future.css'],
 })
-export class PrevisioniFuture implements OnChanges {
-  @Input() city: string = '';
-  dati: any = null;
+export class PrevisioniFuture {
+  city = '';
+  dati: any;
   loading = false;
   errorMsg = '';
 
-  constructor(private meteo: MeteoService) {}
+  constructor(private meteo: MeteoService, private route: ActivatedRoute) {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['city'] && this.city.trim()) {
-      this.caricaPrevisioni();
-    }
+  ngOnInit() {
+    // se arriva la città dalla query string
+    this.route.queryParams.subscribe(params => {
+      if (params['city']) {
+        this.city = params['city'];
+        this.caricaPrevisioni();
+      }
+    });
   }
 
   caricaPrevisioni() {

@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { MeteoService } from '../services/meteo-service';
 
 @Component({
@@ -16,9 +17,7 @@ export class CurrentMeteo {
   loading = false;
   errorMsg = '';
 
-  @Output() cityChange = new EventEmitter<string>(); // invia la città selezionata
-
-  constructor(private meteoService: MeteoService) {}
+  constructor(private meteoService: MeteoService, private router: Router) {}
 
   caricaMeteo() {
     if (!this.city.trim()) return;
@@ -31,7 +30,6 @@ export class CurrentMeteo {
       next: (risposta) => {
         this.dati = risposta;
         this.loading = false;
-        this.cityChange.emit(this.city); // invio la città anche a PrevisioniFuture
       },
       error: (err) => {
         console.error(err);
@@ -39,5 +37,11 @@ export class CurrentMeteo {
         this.loading = false;
       }
     });
+  }
+
+  vaiPrevisioni() {
+    // naviga al componente Previsioni Future passando la città
+    if (!this.city.trim()) return;
+    this.router.navigate(['/five_days'], { queryParams: { city: this.city } });
   }
 }
