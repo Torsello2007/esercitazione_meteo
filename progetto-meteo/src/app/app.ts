@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
+import { CurrentMeteo } from './current-meteo/current-meteo';
+import { PrevisioniFuture } from './previsioni-future/previsioni-future';
 
 @Component({
   selector: 'app-root',

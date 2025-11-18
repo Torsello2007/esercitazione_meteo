@@ -1,1 +1,7 @@
-<p>current-meteo works!</p>
+<button class="btn btn-primary mb-3" (click)="caricaMeteo()">
+Nuovo fatto
+</button>
+<p *ngIf="dati">
+{{ dati.dati }}
+</p>
+<input 
