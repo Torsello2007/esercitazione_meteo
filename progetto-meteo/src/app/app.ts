@@ -5,7 +5,7 @@ import { PrevisioniFuture } from './previsioni-future/previsioni-future';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, CurrentMeteo, PrevisioniFuture, RouterLink],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

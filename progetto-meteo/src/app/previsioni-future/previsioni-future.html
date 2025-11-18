@@ -1,1 +1,33 @@
-<p>previsioni-future works!</p>
+<div class="card p-3">
+  <h2>Previsioni Future</h2>
+
+  <!-- input per la città -->
+  <div class="mb-3 d-flex gap-2">
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="city"
+      placeholder="Inserisci una città"
+    />
+    <button class="btn btn-primary" (click)="caricaPrevisioni()">
+      Carica previsioni
+    </button>
+  </div>
+
+  <!-- se ho dati, li mostro (come *ngIf="fact") -->
+  <div *ngIf="dati">
+
+    <!-- OpenWeather manda le previsioni in dati.list -->
+    <div *ngFor="let item of dati.list" class="border-bottom py-1">
+      <strong>{{ item.dt_txt }}</strong><br />
+      Temperatura: {{ item.main.temp }} °C<br />
+      Condizioni: {{ item.weather[0].description }}
+    </div>
+
+  </div>
+
+  <!-- se non ho ancora dati -->
+  <p *ngIf="!dati">
+    Nessuna previsione caricata.
+  </p>
+</div>
